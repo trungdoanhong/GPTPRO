@@ -266,7 +266,7 @@ class ChatGPTAutomation:
         """Mở trang ChatGPT"""
         try:
             logger.info("Đang mở trang ChatGPT...")
-            self.driver.get("https://chatgpt.com")
+            self.driver.get("https://chat.openai.com")
             
             # Đợi trang load
             time.sleep(3)
@@ -305,10 +305,10 @@ class ChatGPTAutomation:
             logger.error(f"Lỗi trong quá trình đăng nhập: {str(e)}")
             return False
     
-    def select_model_o3(self):
-        """Chọn mô hình o3"""
+    def select_model_gpt4o(self):
+        """Chọn mô hình GPT-4o"""
         try:
-            logger.info("Đang tìm kiếm mô hình o3...")
+            logger.info("Đang tìm kiếm mô hình GPT-4o...")
             
             # Tìm dropdown để chọn mô hình
             model_selectors = [
@@ -338,36 +338,36 @@ class ChatGPTAutomation:
             model_button.click()
             time.sleep(2)
             
-            # Tìm và chọn mô hình o3
-            o3_selectors = [
-                "//div[contains(text(), 'o3') or contains(text(), 'O3')]",
-                "//option[contains(text(), 'o3') or contains(text(), 'O3')]",
-                "//li[contains(text(), 'o3') or contains(text(), 'O3')]",
-                "//button[contains(text(), 'o3') or contains(text(), 'O3')]"
+            # Tìm và chọn mô hình GPT-4o
+            gpt4o_selectors = [
+                "//div[contains(text(), '4o') or contains(text(), 'GPT-4o')]",
+                "//option[contains(text(), '4o') or contains(text(), 'GPT-4o')]",
+                "//li[contains(text(), '4o') or contains(text(), 'GPT-4o')]",
+                "//button[contains(text(), '4o') or contains(text(), 'GPT-4o')]"
             ]
-            
-            o3_option = None
-            for selector in o3_selectors:
+
+            gpt4o_option = None
+            for selector in gpt4o_selectors:
                 try:
-                    o3_option = self.wait.until(
+                    gpt4o_option = self.wait.until(
                         EC.element_to_be_clickable((By.XPATH, selector))
                     )
-                    logger.info(f"Tìm thấy mô hình o3 với selector: {selector}")
+                    logger.info(f"Tìm thấy mô hình GPT-4o với selector: {selector}")
                     break
                 except TimeoutException:
                     continue
-            
-            if o3_option:
-                o3_option.click()
-                logger.info("Đã chọn mô hình o3 thành công")
+
+            if gpt4o_option:
+                gpt4o_option.click()
+                logger.info("Đã chọn mô hình GPT-4o thành công")
                 time.sleep(2)
                 return True
             else:
-                logger.warning("Không tìm thấy mô hình o3. Sử dụng mô hình mặc định.")
+                logger.warning("Không tìm thấy mô hình GPT-4o. Sử dụng mô hình mặc định.")
                 return True
                 
         except Exception as e:
-            logger.error(f"Lỗi khi chọn mô hình o3: {str(e)}")
+            logger.error(f"Lỗi khi chọn mô hình GPT-4o: {str(e)}")
             return False
     
     def send_question(self, question):
@@ -378,6 +378,7 @@ class ChatGPTAutomation:
             # Tìm ô input
             input_selectors = [
                 "//textarea[contains(@placeholder, 'Message') or contains(@placeholder, 'Send a message')]",
+                "//textarea[contains(@data-testid, 'prompt-textarea')]",
                 "//textarea[contains(@class, 'input')]",
                 "//div[contains(@contenteditable, 'true')]",
                 "//input[contains(@type, 'text')]"
@@ -426,7 +427,8 @@ class ChatGPTAutomation:
                     typing_indicators = [
                         "//div[contains(@class, 'typing')]",
                         "//div[contains(@class, 'loading')]",
-                        "//div[contains(@class, 'thinking')]"
+                        "//div[contains(@class, 'thinking')]",
+                        "//div[contains(@class, 'result-streaming')]"
                     ]
                     
                     is_typing = False
@@ -466,6 +468,7 @@ class ChatGPTAutomation:
             message_selectors = [
                 "//div[contains(@class, 'message') and contains(@class, 'assistant')]",
                 "//div[contains(@data-message-author-role, 'assistant')]",
+                "//div[@data-message-author-role='assistant']",
                 "//div[contains(@class, 'response')]",
                 "//div[contains(@class, 'ai-message')]"
             ]
@@ -523,8 +526,8 @@ class ChatGPTAutomation:
                 logger.error("Không thể đăng nhập")
                 return None
             
-            # Chọn mô hình o3
-            self.select_model_o3()
+            # Chọn mô hình GPT-4o (nếu có)
+            self.select_model_gpt4o()
             
             # Gửi câu hỏi
             if not self.send_question(question):
