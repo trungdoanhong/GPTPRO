@@ -469,6 +469,7 @@ class ChatGPTAutomation:
                 "//div[contains(@class, 'message') and contains(@class, 'assistant')]",
                 "//div[contains(@data-message-author-role, 'assistant')]",
                 "//div[@data-message-author-role='assistant']",
+                "//div[@data-message-author-role='assistant']//div[contains(@class, 'markdown')]",
                 "//div[contains(@class, 'response')]",
                 "//div[contains(@class, 'ai-message')]"
             ]
