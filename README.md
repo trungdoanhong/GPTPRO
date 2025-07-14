@@ -1,6 +1,6 @@
 # ChatGPT Automation với Selenium
 
-Chương trình Python tự động truy cập ChatGPT, chọn mô hình o3, đặt câu hỏi và copy câu trả lời.
+Chương trình Python tự động truy cập ChatGPT, chọn mô hình GPT-4o, đặt câu hỏi và copy câu trả lời.
 
 ## Yêu cầu hệ thống
 
@@ -77,7 +77,7 @@ bot = ChatGPTAutomation(user_data_dir=r"C:\Users\YOU\AppData\Local\Google\Chrome
 
 - ✅ Tự động mở ChatGPT
 - ✅ Xử lý đăng nhập (hỗ trợ đăng nhập thủ công)
-- ✅ Tự động chọn mô hình o3
+ - ✅ Tự động chọn mô hình GPT-4o
 - ✅ Gửi câu hỏi tự động
 - ✅ Đợi phản hồi từ ChatGPT
 - ✅ Lấy câu trả lời và copy vào clipboard
@@ -131,7 +131,7 @@ chatgpt.close()
 
 3. **Đăng nhập**: Chương trình sẽ copy cookies/login từ Chrome chính, hoặc yêu cầu đăng nhập nếu cần.
 
-4. **Mô hình o3**: Nếu không tìm thấy mô hình o3, chương trình sẽ sử dụng mô hình mặc định.
+4. **Mô hình GPT-4o**: Nếu không tìm thấy mô hình GPT-4o, chương trình sẽ sử dụng mô hình mặc định.
 
 5. **Rate limiting**: Tránh gửi quá nhiều request trong thời gian ngắn để tránh bị giới hạn.
 
